@@ -30,6 +30,8 @@ $(function () {
         $('.modal-body p').text(res.msg)
         if (res.code == 200) {
           $('.modal').on('hidden.bs.modal', function (e) {
+            // 将服务器端响应回来的token字符串，存储到本地存储当中
+            localStorage.setItem('token',res.token)
             window.location.href = './index.html'
           })
         }
