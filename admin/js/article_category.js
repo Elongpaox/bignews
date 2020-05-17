@@ -14,5 +14,14 @@ $(function(){
       }
     }
   })
-  
+
+  // 2. 模态框的展示
+  $('#xinzengfenlei').on('click',function(){
+    $('.modal').modal('show')
+  })
+  // CRUD
+  // C create  增加 添加
+  // R read    查询 读取 获取 
+  // U update  更新 
+  // D delete  删除
 })
