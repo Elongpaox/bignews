@@ -4,12 +4,13 @@ $(function () {
         // 用户信息
         url: window.BigNew.user_info,
         // 设置请求头，把刚刚开始储存到浏览器内存中的token令牌带过去
-        headers: {
-            Authorization: window.localStorage.getItem('token')
-        },
+        // headers: {
+        //     Authorization: window.localStorage.getItem('token')
+        // },
         success: function (res) {
             console.log(res);
             if (res.code == 200) {
+                console.log(res.data.nickname);
                 // 实时获取名字赋值在用户名上
                 $(".user_info>span>i").text(res.data.nickname);
                 // 实时获取头像的地址
