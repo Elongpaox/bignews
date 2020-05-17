@@ -4,8 +4,8 @@
   var BigNew = {
       baseURL:baseURL,//基地址
       user_login:      baseURL + '/admin/user/login',//用户登录
-      user_info:       baseURL + '/admin/user/info',//用户信息
-      user_detail:     baseURL + '/admin/user/detail',//用户详情
+      user_info:       baseURL + '/admin/user/info',//登陆的用户信息
+      user_detail:     baseURL + '/admin/user/detail',//用户详情 个人中心
       user_edit:       baseURL + '/admin/user/edit',//用户编辑
       category_list:   baseURL + '/admin/category/list',//文章类别查询
       category_add:    baseURL + '/admin/category/add',//文章类别新增
