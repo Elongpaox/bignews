@@ -5,13 +5,17 @@ $(function () {
         url: window.BigNew.user_info,
         // 设置请求头，把刚刚开始储存到浏览器内存中的token令牌带过去
         headers: {
+            // 
             Authorization: window.localStorage.getItem('token')
         },
         success: function (res) {
             console.log(res);
             if (res.code == 200) {
+                // 实时获取名字赋值在用户名上
                 $(".user_info>span>i").text(res.data.nickname);
+                // 实时获取头像的地址
                 $(".user_info>img").attr("src", res.data.userPic);
+                // 实时获取
                 $(".user_center_link>img").attr("src", res.data.userPic);
             }
         }
