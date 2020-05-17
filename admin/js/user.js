@@ -4,9 +4,9 @@ $(function () {
   $.ajax({
     type: 'get',
     url: BigNew.user_detail,
-    headers: {
-      'Authorization': localStorage.getItem('token')
-    },
+    // headers: {
+    //   'Authorization': localStorage.getItem('token')
+    // },
     success: function (res) {
       console.log(res)
       // console.log(typeof res);
@@ -49,9 +49,9 @@ $(function () {
     $.ajax({
       type: 'post',
       url: BigNew.user_edit,
-      headers: {
-        'Authorization': localStorage.getItem('token')
-      },
+      // headers: {
+      //   'Authorization': localStorage.getItem('token')
+      // },
       data: data,
       contentType: false, // 不要进行其它编码 不需要额外编码就是二进制
       processData: false, // 不要转换成字符串
@@ -69,9 +69,9 @@ $(function () {
             type: 'get',
             // url:'http://localhost:8080/api/v1/admin/user/info',
             url: BigNew.user_info,
-            headers: {
-              'Authorization': localStorage.getItem('token')
-            },
+            // headers: {
+            //   'Authorization': localStorage.getItem('token')
+            // },
             success: function (res) {
               // console.log(res);
               // 1.2. 请求回来数据后要渲染到页面
