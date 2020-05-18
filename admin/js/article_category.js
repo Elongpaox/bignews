@@ -2,7 +2,7 @@ $(function () {
   // 1. 发送请求获取数据，渲染页面
   // 1.1 发送ajax请求
   render()
-  function render(){
+  function render() {
     $.ajax({
       type: 'get',
       url: BigNew.category_list,
@@ -21,6 +21,8 @@ $(function () {
   // 2. 模态框的展示
   // 2.1 给新增按钮注册事件 弹出模态框 
   $('#xinzengfenlei').on('click', function () {
+    // 清空模态框
+    $('#myForm')[0].reset()  //重置表单
     // 2.2 显示模态框
     $('.addModal').modal('show')
 
@@ -49,6 +51,7 @@ $(function () {
       success: function (res) {
         // console.log(res)
         if (res.code == 200) {
+          // 将查询到的要编辑的数据先显示在模态框上
           $('#myForm input[name=id]').val(res.data[0].id)
           $('#myForm input[name=name]').val(res.data[0].name)
           $('#myForm input[name=slug]').val(res.data[0].slug)
@@ -61,7 +64,7 @@ $(function () {
   // 4. 新增或更新数据
   // 4.1 给模态框的确定按钮注册事件
   $('.addModal .btn-sure').on('click', function () {
-    console.log(123);
+    console.log(123)
     // 4.2 获取隐藏域中的id
     var id = $('#myForm input[name=id]').val()
 
@@ -72,7 +75,7 @@ $(function () {
       data: $('#myForm').serialize(),
       success: function (res) {
         // console.log(res)
-        if(res.code==200||res.code==201){
+        if (res.code == 200 || res.code == 201) {
           // 4.4 隐藏模态框
           $('.addModal').modal('hide')
 
@@ -83,7 +86,38 @@ $(function () {
     })
   })
 
+  // 5. 删除数据
+  // 5.1 给删除按钮注册事件 
+  $('tbody').on('click', '.btn-del', function () {
+    // 5.2 弹出提示框 
+    $('.delModal').modal('show')
 
+    // 5.3 获取当前按钮所在的那条数据的id
+    window.categoryId = $(this).data('id')
+  })
+
+  // 5.4 给删除的模态框中的确定按钮注册事件
+  $('.delModal .btn-sure').on('click', function () {
+    // 5.5 向服务器端发送请求
+    $.ajax({
+      type: 'post',
+      url: BigNew.category_delete,
+      data: {
+        id: window.categoryId
+      },
+      success: function (res) {
+        // console.log(res);
+        if (res.code == 204) {
+          // 5.5 隐藏模态框
+          $('.delModal').modal('hide')
+
+          // 5.6 刷新页面
+          render()
+        }
+
+      }
+    })
+  })
 
 
 
