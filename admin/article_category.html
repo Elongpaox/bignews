@@ -50,7 +50,7 @@
     </div>
 
     <!-- 这是添加或是编辑的模态框 -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal fade addModal" id="myModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -78,13 +78,30 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">确定</button>
+                    <button type="button" class="btn btn-primary btn-sure">确定</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
-
+    <!-- 这个是删除数据的模态框 -->
+    <div class="modal fade delModal" id="delModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">温馨提示</h4>
+            </div>
+            <div class="modal-body">
+              <p>您真的确定要删除此条数据么？？？</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+              <button type="button" class="btn btn-primary btn-sure">确定</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
 
     <script type="text/template" id="categoryList">
         {{each data value index}}
@@ -92,8 +109,8 @@
                 <td>{{value.name}}</td>
                 <td>{{value.slug}}</td>
                 <td class="text-center">
-                    <a href="javascript:void(0)" data-id="{{value.id}}" data-target="#myModal" data-toggle="modal" class=" btn btn-info btn-xs">编辑</a>
-                    <a href="javascript:void(0)" data-id="{{value.id}}" class="btn btn-danger btn-xs">删除</a>
+                    <a href="javascript:;" data-id="{{value.id}}" data-target="#myModal" data-toggle="modal" class=" btn btn-info btn-xs">编辑</a>
+                    <a href="javascript:void(0)" data-target="#delModal" data-toggle="modal" data-id="{{value.id}}" class="btn btn-danger btn-xs">删除</a>
                 </td>
             </tr>
         {{/each}}

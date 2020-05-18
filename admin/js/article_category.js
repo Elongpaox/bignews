@@ -1,19 +1,22 @@
 $(function () {
   // 1. 发送请求获取数据，渲染页面
   // 1.1 发送ajax请求
-  $.ajax({
-    type: 'get',
-    url: BigNew.category_list,
-    success: function (res) {
-      console.log(res)
-      console.log(typeof res)
-      // 1.2 获取数据并渲染页面
-      if (res.code == 200) {
-        var htmlStr = template('categoryList', res)
-        $('tbody').html(htmlStr)
+  render()
+  function render(){
+    $.ajax({
+      type: 'get',
+      url: BigNew.category_list,
+      success: function (res) {
+        console.log(res)
+        console.log(typeof res)
+        // 1.2 获取数据并渲染页面
+        if (res.code == 200) {
+          var htmlStr = template('categoryList', res)
+          $('tbody').html(htmlStr)
+        }
       }
-    }
-  })
+    })
+  }
 
 
   // 2. 确定是哪个按钮弹出来的模态框
@@ -54,4 +57,60 @@ $(function () {
       }) // ajax
     } // else
   })// on
+
+  // 3. 新增或更新数据
+  $('.addModal .btn-sure').on('click', function () {
+    console.log(123)
+    // 3.2 获取隐藏域中的id
+    var id = $('#myForm input[name=id]').val()
+
+    // 3.3 发送ajax请求
+    $.ajax({
+      type: 'post',
+      url: id ? BigNew.category_edit : BigNew.category_add,
+      data: $('#myForm').serialize(),
+      success: function (res) {
+        // console.log(res)
+        if (res.code == 200 || res.code == 201) {
+          // 3.4 隐藏模态框
+          $('.addModal').modal('hide')
+
+          // 3.5 刷新当前页面
+          render()
+        }
+      }
+    })
+  })
+
+ 
+  // 4. 删除数据
+  // 4.1 . 注册弹出框事件，来获取事件源头
+  $('#delModal').on('show.bs.modal', function (e) {
+    window.categoryId = $(e.relatedTarget).data('id')
+  })
+
+  // 4.2 给删除数据的模态框中的按钮注册事件
+  // 5.4 给删除的模态框中的确定按钮注册事件
+  $('.delModal .btn-sure').on('click', function () {
+    // 5.5 向服务器端发送请求
+    $.ajax({
+      type: 'post',
+      url: BigNew.category_delete,
+      data: {
+        id: window.categoryId
+      },
+      success: function (res) {
+        // console.log(res);
+        if (res.code == 204) {
+          // 5.5 隐藏模态框
+          $('.delModal').modal('hide')
+
+          // 5.6 刷新页面
+          render()
+        }
+
+      }
+    })
+  })
+
 }) //入口函数
