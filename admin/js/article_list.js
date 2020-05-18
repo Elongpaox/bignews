@@ -20,6 +20,7 @@ $(function () {
     perpage: 7
   })
 
+  // 封装了一个根据不同参数获取数据的函数
   function getDataByParams(obj) {
     $.ajax({
       type: 'get',
@@ -30,6 +31,9 @@ $(function () {
         if (res.code == 200) {
           var htmlStr = template('articleList', res.data)
           $('tbody').html(htmlStr)
+
+          // 服务器端的数据响应回来了之后, 启用分页功能
+          pagination(res.data.totalPage)
         }
       }
     })
@@ -52,11 +56,26 @@ $(function () {
   })
 
   // 4. 实现分页功能
-  $('#pagination-demo').twbsPagination({
-    totalPages: 35,
-    visiblePages: 7,
-    onPageClick: function (event, page) {
-      $('#page-content').text('Page ' + page)
-    }
-  })
+  function pagination(totalPages, visiblePages) {
+    $('#pagination-demo').twbsPagination({
+      totalPages: totalPages, // 总页数
+      visiblePages: visiblePages || 7, // 可见最大上限页码值
+      first: '首页',
+      last: '最后一页',
+      next: '下一页',
+      prev: '上一页',
+      initiateStartPageClick: false, // 不要默认点击 
+      onPageClick: function (event, page) {
+        //  console.log(event,page);
+        // page是当前页码
+        getDataByParams({
+          key: $('#key').val(),
+          type: $('#selCategory').val(),
+          state: $('#selStatus').val(),
+          page: page,
+          perpage: 7
+        })
+      }
+    })
+  }
 })
