@@ -13,6 +13,8 @@
     <script src="./libs/jquery-1.12.4.min.js"></script>
     <!-- 引入模板引擎js文件 -->
     <script src="./libs/template-web.js"></script>
+    <script src="./libs/bootstrap/js/bootstrap.min.js"></script>
+    <script src="./libs/jquery.twbsPagination.js"></script>
     <script src="./js/article_list.js"></script>
     <script src="./libs/http.js"></script>
 </head>
@@ -71,10 +73,20 @@
                 </tbody>
             </table>
             <div class="row text-center">
+                <!-- 分页插件的结构 -->
+                <ul id="pagination-demo" class="pagination-sm"></ul>
+                <p>没有数据</p>
             </div>
         </div>
     </div>
-    <!--动态生成模板 -->
+    <!-- 文章类别模板 -->
+    <script id="art_cate_temp" type="text/html">
+        <option value="">所有分类</option>
+        {{each data v}}
+        <option value="{{v.id}}">{{v.name}}</option>
+        {{/each}}
+    </script>
+    <!-- 文章列表模板 -->
     <script id="arti_list" type="text/html">
         {{each data.data v}}
         <tr>
