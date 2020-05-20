@@ -1,8 +1,9 @@
 (function () {
   var utils = {
     // 在此对象中可以封装很多方法
-    convertToObj(str) {
-      var arr = str.split('&')
+    // convertToObj(str) { ES6的写法
+    convertToObj:function(str) {
+      var arr = str.split('&') // 以'&'进行切割
       var obj = {}
       for (var i = 0;i < arr.length;i++) {
         var temp = arr[i].split('=') // temp = ['id','20']
