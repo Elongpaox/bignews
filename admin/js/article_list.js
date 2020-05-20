@@ -84,6 +84,12 @@ $(function () {
     })
     
   })
+
+  // 5. 删除数据
+  // 5.1 给模态框注册事件,要找到事件源头，进而找到删除按钮上的id
+  $('#myModal').on('show.bs.modal', function (e) {
+    console.log(e.relatedTarget );
+  })
 })
 
 /**
