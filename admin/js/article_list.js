@@ -22,7 +22,7 @@ $(function () {
         type: $('#selCategory').val(),
         state: $('#selStatus').val(),
         page: myPage,
-        perpage: 3
+        perpage: 7
       },
       success: function (res) {
         console.log(res)
@@ -43,7 +43,10 @@ $(function () {
           } else if (res.data.totalPage != 0 && res.data.data.length == 0) {
             currentPage -= 1  // 针对于最后一页而言的 
             // 重绘控件页码
-            // 更新分页控件的总页码
+            // 更新分页控件的总页码 
+            // 1. 第1个参数是一个事件 当页码值发生变化时就会触发
+            // 2. 第2个参数是 要变化的新的总页码值
+            // 3. 第3个参数 是当前页码值
             $('#pagination-demo').twbsPagination('changeTotalPages', res.data.totalPage, currentPage)
           }
 
