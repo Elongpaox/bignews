@@ -46,13 +46,33 @@ $(function () {
     e.preventDefault()
     // alert(123)
     // 3.3 调用函数来获取数据
-    getDataByParams({
-      key: $('#key').val(),
-      type: $('#selCategory').val(),
-      state: $('#selStatus').val(),
-      page: 1,
-      perpage: 10
+    $.ajax({
+      type: 'get',
+      url: BigNew.article_query,
+      data: {
+        key: $('#key').val(),
+        type: $('#selCategory').val(),
+        state: $('#selStatus').val(),
+        page: 1,
+        perpage: 7
+      },
+      success: function (res) {
+        console.log(res)
+        if (res.code == 200) {
+          var htmlStr = template('articleList', res.data)
+          $('tbody').html(htmlStr)
+
+          // 服务器端的数据响应回来了之后, 更新分页控件 也就是更新总页码
+          // 要使用一个事件changeTotalPages，动态的改变总页码  内部底层就会重绘分页控件
+          // 第1个参数 是事件名称
+          // 第2个参数 是总页码
+          // 第3个参数 是默认的当前页
+          $('#pagination-demo').twbsPagination('changeTotalPages', res.data.totalPage, 1)
+        }
+      }
     })
+
+
   })
 
   // 4. 实现分页功能
@@ -79,3 +99,8 @@ $(function () {
     })
   }
 })
+
+/**
+ * 1. 当前项目不要纠结于某一行代码
+ * 2. 要听完整的思路
+ */
