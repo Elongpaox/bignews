@@ -10,10 +10,10 @@ $(function () {
     }
   })
 
- 
+
 
   // 封装了一个根据不同条件来查询数据的函数
-  function getDataByParams(myPage,callback){
+  function getDataByParams(myPage, callback) {
     $.ajax({
       type: 'get',
       url: BigNew.article_query,
@@ -30,27 +30,28 @@ $(function () {
           // 2.2 渲染数据
           var htmlStr = template('articleList', res.data)
           $('tbody').html(htmlStr)
-  
+
           // 2.4  根据服务器响应回来的数据来判断是否显示控件
-          if (res.data.totalPage == 0&& myPage==1) {
+          if (res.data.totalPage == 0 && myPage == 1) {
             $('#pagination-demo').hide().next().show()
-          } else if(res.data.totalPage != 0&&callback!=null) {
+          } else if (res.data.totalPage != 0 && callback != null) {
             // 就说明是有数据响应回来的，应该要显示分页控件
             $('#pagination-demo').show().next().hide()
             // 2.3 实现函数的调用
             callback(res)
             // pagination(res)
           }
-  
+
         }
       }
     })
   }
   // 2. 显示文章数据
   // 2.1 一跳转到当前这个页面就要发送ajax请求
-  getDataByParams(1,pagination)
+  getDataByParams(1, pagination)
 
   // 3. 分页功能的函数
+  var currentPage = 1;
   function pagination(res, visiblePages) {
     $('#pagination-demo').twbsPagination({
       totalPages: res.data.totalPage, // 总页数
@@ -63,9 +64,9 @@ $(function () {
       onPageClick: function (event, page) {
         //  console.log(event,page);
         // page是当前页码
-
+        currentPage= page; // 当默认页改成被单击后的页码
         // 调用方法，实现当前页码的数据渲染
-        getDataByParams(page,null)
+        getDataByParams(page, null)
       }
     })
   }
@@ -78,17 +79,36 @@ $(function () {
 
     // 4.3 发送请求获取数据
 
-    getDataByParams(1,function(res){
+    getDataByParams(1, function (res) {
       // 更新分页控件的总页码
       $('#pagination-demo').twbsPagination('changeTotalPages', res.data.totalPage, 1)
     })
-    
+
   })
 
   // 5. 删除数据
   // 5.1 给模态框注册事件,要找到事件源头，进而找到删除按钮上的id
+  var articleId;
   $('#myModal').on('show.bs.modal', function (e) {
-    console.log(e.relatedTarget );
+    // console.log(e.relatedTarget );
+    articleId = $(e.relatedTarget).data('id')
+  })
+  // 5.2 给模态框上的确定按钮注册事件
+  $('#myModal .btn-sure').on('click', function () {
+    // 5.3 发送ajax请求 
+    $.ajax({
+      type:'post',
+      url:BigNew.article_delete,
+      data:{
+        id:articleId
+      },
+      success:function(res){
+        // 5.4 请求成功后要隐藏模态框 
+        $('#myModal').modal('hide')
+        // 5.5 刷新当前页面
+        getDataByParams(currentPage,null)
+      }
+    })
   })
 })
 
