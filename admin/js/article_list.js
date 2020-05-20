@@ -22,7 +22,7 @@ $(function () {
         type: $('#selCategory').val(),
         state: $('#selStatus').val(),
         page: myPage,
-        perpage: 7
+        perpage: 3
       },
       success: function (res) {
         console.log(res)
@@ -40,6 +40,11 @@ $(function () {
             // 2.3 实现函数的调用
             callback(res)
             // pagination(res)
+          } else if (res.data.totalPage != 0 && res.data.data.length == 0) {
+            currentPage -= 1  // 针对于最后一页而言的 
+            // 重绘控件页码
+            // 更新分页控件的总页码
+            $('#pagination-demo').twbsPagination('changeTotalPages', res.data.totalPage, currentPage)
           }
 
         }
@@ -51,7 +56,7 @@ $(function () {
   getDataByParams(1, pagination)
 
   // 3. 分页功能的函数
-  var currentPage = 1;
+  var currentPage = 1
   function pagination(res, visiblePages) {
     $('#pagination-demo').twbsPagination({
       totalPages: res.data.totalPage, // 总页数
@@ -64,7 +69,7 @@ $(function () {
       onPageClick: function (event, page) {
         //  console.log(event,page);
         // page是当前页码
-        currentPage= page; // 当默认页改成被单击后的页码
+        currentPage = page // 当默认页改成被单击后的页码
         // 调用方法，实现当前页码的数据渲染
         getDataByParams(page, null)
       }
@@ -88,7 +93,7 @@ $(function () {
 
   // 5. 删除数据
   // 5.1 给模态框注册事件,要找到事件源头，进而找到删除按钮上的id
-  var articleId;
+  var articleId
   $('#myModal').on('show.bs.modal', function (e) {
     // console.log(e.relatedTarget );
     articleId = $(e.relatedTarget).data('id')
@@ -97,16 +102,16 @@ $(function () {
   $('#myModal .btn-sure').on('click', function () {
     // 5.3 发送ajax请求 
     $.ajax({
-      type:'post',
-      url:BigNew.article_delete,
-      data:{
-        id:articleId
+      type: 'post',
+      url: BigNew.article_delete,
+      data: {
+        id: articleId
       },
-      success:function(res){
+      success: function (res) {
         // 5.4 请求成功后要隐藏模态框 
         $('#myModal').modal('hide')
         // 5.5 刷新当前页面
-        getDataByParams(currentPage,null)
+        getDataByParams(currentPage, null)
       }
     })
   })
