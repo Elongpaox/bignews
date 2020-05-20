@@ -29,8 +29,16 @@ $(function () {
         var htmlStr = template('articleList', res.data)
         $('tbody').html(htmlStr)
 
-        // 2.3 实现分页功能
-        pagination(res)
+        // 2.4  根据服务器响应回来的数据来判断是否显示控件
+        if (res.data.totalPage == 0) {
+          $('#pagination-demo').hide().next().show()
+        } else {
+          // 就说明是有数据响应回来的，应该要显示分页控件
+          $('#pagination-demo').show().next().hide()
+          // 2.3 实现分页控件
+          pagination(res)
+        }
+
       }
     }
   })
@@ -64,9 +72,8 @@ $(function () {
               // 2.2 渲染数据
               var htmlStr = template('articleList', res.data)
               $('tbody').html(htmlStr)
-
-              // 2.3 实现分页功能
-              pagination(res)
+              
+              // 什么都没有做
             }
           }
         })
@@ -76,7 +83,7 @@ $(function () {
 
   // 4. 给筛选按钮注册事件 根据新条件渲染页面
   // 4.1 给筛选按钮注册事件
-  $('#btnSearch').on('click',function(e){
+  $('#btnSearch').on('click', function (e) {
     // 4.2 阻止默认的请求行为
     e.preventDefault()
 
@@ -98,8 +105,17 @@ $(function () {
           var htmlStr = template('articleList', res.data)
           $('tbody').html(htmlStr)
 
-          // 4.5 更新分页控件的总页码
-          $('#pagination-demo').twbsPagination('changeTotalPages',res.data.totalPage,1)
+          // 4.6 根据服务器响应回来的数据来判断是否显示控件
+          if (res.data.totalPage == 0) {
+            $('#pagination-demo').hide().next().show()
+          } else {
+            // 就说明是有数据响应回来的，应该要显示分页控件
+            $('#pagination-demo').show().next().hide()
+
+            // 4.5 更新分页控件的总页码
+            $('#pagination-demo').twbsPagination('changeTotalPages', res.data.totalPage, 1)
+          }
+
         }
       }
     })
