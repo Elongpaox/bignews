@@ -118,6 +118,13 @@ $(function () {
       }
     })
   })
+
+  // 6. 给发表文章按钮注册事件
+  // 6.1 给发布文章注册事件
+  $('#release_btn').on('click',function(){
+    // 6.2  修改父页面中的按钮状态
+    parent.$('.menu .level02>li:eq(1)').click()
+  })
 })
 
 /**
