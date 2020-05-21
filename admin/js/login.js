@@ -1,6 +1,6 @@
-$(() => {
+$(function () {
     // 登入判断
-    $(".input_sub").on("click", (e) => {
+    $(".input_sub").on("click", function (e) {
         // 阻止默认事件
         e.preventDefault();
         // 获取密码框与文本框的内容
@@ -22,7 +22,7 @@ $(() => {
                 username: username,
                 password: password
             },
-            success: (res) => {
+            success: function (res) {
                 console.log(res);
                 // 使用bootstrop实现弹出模态框
                 $("#myModal .modal-body").text(res.msg);

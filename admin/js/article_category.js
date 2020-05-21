@@ -10,15 +10,6 @@ $(function () {
             success: function (res) {
                 console.log(res);
                 if (res.code === 200) {
-                    //     console.log(res.data[0].id);
-                    //     for (var i = 0; i < res.data.length; i++) {
-                    //         if (res.data[i].id > res.data[i + 1].id) {
-                    //             let tmp = res.data[i + 1];
-                    //             res.data[i + 1] = res.data[i];
-                    //             res.data[i] = tmp;
-                    //         }
-                    //     }
-                    console.log(res.data);
                     // 把获取到的数据渲染到页面中
                     let htmlText = template("art_cate_temp", res);
                     console.log(htmlText);
