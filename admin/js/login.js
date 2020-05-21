@@ -1,43 +1,45 @@
+// 1. 写入口函数
 $(function () {
-    // 登入判断
-    $(".input_sub").on("click", function (e) {
-        // 阻止默认事件
-        e.preventDefault();
-        // 获取密码框与文本框的内容
-        let username = $(".input_txt").val().trim();
-        let password = $(".input_pass").val().trim();
-        // 判断是否为空
-        if (username == "" || password == "") {
-            $("#myModal .modal-body").text("账号或密码输入错误！");
-            $("#myModal").modal();
-            return;
-        }
-        // 点击登入发送ajax请求
-        $.ajax({
-            type: "post",
-            // 用户登入的地址
-            url: window.BigNew.user_login,
-            // 给服务器传入数据
-            data: {
-                username: username,
-                password: password
-            },
-            success: function (res) {
-                console.log(res);
-                // 使用bootstrop实现弹出模态框
-                $("#myModal .modal-body").text(res.msg);
-                $("#myModal").modal();
-                if (res.code == 200) {
-                    //账号密码正确,会返回一个token,把他存在本地.
-                    window.localStorage.setItem("token", res.token);
-                    //此事件在模态框被隐藏（并且同时在 CSS 过渡效果完成）之后被触发。
-                    $("#myModal").on("hidden.bs.modal", function (e) {
-                        window.location.href = "./index.html";
-                    });
-                }
+  // 2. 给form表单注册submit事件
+  $('.login_form').on('submit', function (e) {
+    // 3. 阻止默认提交行为
+    e.preventDefault()
 
-            }
-
+    // 4. 发送ajax请求
+    $.ajax({
+      type: 'post',
+      // url: 'http://localhost:8080/api/v1/admin/user/login',
+      url: BigNew.user_login,
+      data: $(this).serialize(),
+      beforeSend: function () {
+        // 5. 发送请求之前验证用户名或密码是否为空
+        var flag = false
+        $('.login_form input[name]').each(function (index, ele) {
+          if ($.trim($(ele).val()) == '') {
+            flag = true
+          }
         })
+        if (flag) {
+          // alert('输入的用户名或密码不能为空')
+          $('.modal').modal('show')
+          $('.modal-body p').text('输入的用户名或密码不能为空')
+          return false// 阻止请求的发送
+        }
+      },
+      success: function (res) {
+        $('.modal').modal('show')
+        $('.modal-body p').text(res.msg)
+        if (res.code == 200) {
+          $('.modal').on('hidden.bs.modal', function (e) {
+            // 将服务器端响应回来的token字符串，存储到本地存储当中
+            localStorage.setItem('token',res.token)
+            window.location.href = './index.html'
+          })
+        }
+      }
     })
-});
+  })
+
+
+  //  实现模态框的显示与隐藏
+})
