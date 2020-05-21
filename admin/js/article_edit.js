@@ -30,6 +30,7 @@ $(function () {
       console.log(res)
       // 将数据渲染到页面上
       if (res.code == 200) {
+        $('#form input[name=id]').val(res.data.id)
         $('#form input[name=title]').val(res.data.title)
         $('#form .article_cover').attr('src', res.data.cover)
         // $('#form select[name="categoryId"]').val(res.data.categoryId)
@@ -67,6 +68,39 @@ $(function () {
      // 5.4 给对应的img标签添加此属性值 
      $('.article_cover').attr('src',url)
   })
+  
+  // 6. 文章更新之修改按钮
+  // 6.1 给修改按钮注册事件
+  $('#form .btn-edit').on('click',function(e){
+    // 6.2 阻止默认行为
+    e.preventDefault()
+    // 6.3 准备要上传数据 此时一定要注意上传的id存在隐藏域中
+    var form = $('#form')[0] // 转换成DOM对象
+    var data = new FormData(form) // 传入的必须是一个DOM对象,会将form表单中所有具有name属性的input  select textarea等数据一并获取并转换二进制
+
+    // 6.4 还要此文章改成'已发布'
+    data.append('state','已发布')
+    data.append('content',editor.txt.html())
+
+    // 6.5 发送ajax请求
+    $.ajax({
+      type:'post',
+      url:BigNew.article_edit,
+      data:data,
+      contentType:false, // 不要使用默认的编码格式
+      processData:false, // 不要转换成拼接的字符串形式，因为本身是二进制的数据
+      success:function(res){
+        // 6.6 如果更新成功，则要跳转到文章列表页
+        // console.log(res);
+        if(res.code==200){
+          // window.location.href
+          // 由于我们是从文章列表页跳转过来的，我们还可以跳回去
+          window.history.back() // 回退到上一页
+        }
+      }
+    })
+  })
+  
   
   
  
