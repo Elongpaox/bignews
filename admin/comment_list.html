@@ -35,7 +35,7 @@
             <th>评论在</th>
             <th>提交于</th>
             <th>状态</th>
-            <th class="text-center" width="100">操作</th>
+            <th class="text-center" width="200">操作</th>
           </tr>
         </thead>
         <tbody>
@@ -66,6 +66,7 @@
           <td>已拒绝</td>
         {{/if}}
         <td class="text-center">
+          <button data-id="{{value.id}}" class="btn btn-warning btn-xs btn-pass">通过</button>
           <button data-id="{{value.id}}" class="btn btn-warning btn-xs btn-reject">拒绝</button>
           <button data-id="{{value.id}}" class="btn btn-danger btn-xs btn-del">删除</button>
         </td>

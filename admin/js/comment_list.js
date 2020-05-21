@@ -105,4 +105,25 @@ $(function () {
     })
   })
 
+  // 6. 拒绝按钮的功能
+  // 6.1 给拒绝按钮注册事件
+  $('tbody').on('click', '.btn-pass', function () {
+    var _this = this
+    // 6.2 根据id来发送ajax请求
+    $.ajax({
+      type: 'post',
+      url: BigNew.comment_pass,
+      data: {
+        id: $(this).data('id')
+      },
+      success: function (res) {
+        // 6.3 设置成功后,要更新当前这条数据的状态
+        if(res.code==200){
+          // console.log(this);
+          $(_this).parent().prev().text(res.msg) 
+        }
+      }
+    })
+  })
+
 })
