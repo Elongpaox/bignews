@@ -84,4 +84,25 @@ $(function () {
   })
 
 
+  // 5. 删除按钮的功能
+  // 5.1 给删除按钮注册事件
+  $('tbody').on('click', '.btn-del', function () {
+    // 5.2 根据id来发送ajax请求
+    $.ajax({
+      type: 'post',
+      url: BigNew.comment_delete,
+      data: {
+        id: $(this).data('id')
+      },
+      success: function (res) {
+        // 5.3 设置成功后,要更新当前这条数据的状态
+        if(res.code==200){
+          // console.log(this);
+          // 更新当前页码中的页面数据
+          getDataByParams(currentPage,null)
+        }
+      }
+    })
+  })
+
 })
