@@ -69,52 +69,92 @@ $(function () {
     $('.article_cover').attr('src', url)
   })
 
-  // 6. 文章更新之修改按钮
-  // 6.1 给修改按钮注册事件
-  $('#form .btn-edit').on('click', function (e) {
-    // 6.2 阻止默认行为
+  // // 6. 文章更新之修改按钮
+  // // 6.1 给修改按钮注册事件
+  // $('#form .btn-edit').on('click', function (e) {
+  //   // 6.2 阻止默认行为
+  //   e.preventDefault()
+  //   // 6.3 准备要上传数据 此时一定要注意上传的id存在隐藏域中
+  //   var form = $('#form')[0] // 转换成DOM对象
+  //   var data = new FormData(form) // 传入的必须是一个DOM对象,会将form表单中所有具有name属性的input  select textarea等数据一并获取并转换二进制
+
+  //   // 6.4 还要此文章改成'已发布'
+  //   data.append('state', '已发布')
+  //   data.append('content', editor.txt.html())
+
+  //   // 6.5 发送ajax请求
+  //   $.ajax({
+  //     type: 'post',
+  //     url: BigNew.article_edit,
+  //     data: data,
+  //     contentType: false, // 不要使用默认的编码格式
+  //     processData: false, // 不要转换成拼接的字符串形式，因为本身是二进制的数据
+  //     success: function (res) {
+  //       // 6.6 如果更新成功，则要跳转到文章列表页
+  //       // console.log(res);
+  //       if (res.code == 200) {
+  //         // window.location.href
+  //         // 由于我们是从文章列表页跳转过来的，我们还可以跳回去
+  //         window.history.back() // 回退到上一页
+  //       }
+  //     }
+  //   })
+  // })
+
+  // // 7. 文章编辑之存为草稿按钮
+  // // 7.1 给存为草稿按钮注册事件
+  // $('#form .btn-draft').on('click', function (e) {
+  //   // 7.2 阻止默认行为
+  //   e.preventDefault()
+  //   // 7.3 准备要发送的数据 是formData格式的
+  //   var form = $('#form')[0]
+  //   var data = new FormData(form)
+
+  //   // 7.4 添加文章状态及富文本编辑中的内容
+  //   data.append('state','草稿')
+  //   data.append('content',editor.txt.html())
+
+  //   // 7.5 发送ajax请求
+  //   $.ajax({
+  //     type: 'post',
+  //     url: BigNew.article_edit,
+  //     data: data,
+  //     contentType: false, // 不要使用默认的编码格式
+  //     processData: false, // 不要转换成拼接的字符串形式，因为本身是二进制的数据
+  //     success: function (res) {
+  //       // 7.6 如果更新成功，则要跳转到文章列表页
+  //       // console.log(res);
+  //       if (res.code == 200) {
+  //         // window.location.href
+  //         // 由于我们是从文章列表页跳转过来的，我们还可以跳回去
+  //         window.history.back() // 回退到上一页
+  //       }
+  //     }
+  //   })
+  // })
+
+
+  // 8. 优化代码 将修改按钮和存为草稿按钮 合一起写，内部要进行判断 
+  // 8.1 给按钮注册事件
+  $('#form').on('click','.btn', function (e) {
+    console.log(123);
+    // 8.2 阻止默认行为
     e.preventDefault()
-    // 6.3 准备要上传数据 此时一定要注意上传的id存在隐藏域中
-    var form = $('#form')[0] // 转换成DOM对象
-    var data = new FormData(form) // 传入的必须是一个DOM对象,会将form表单中所有具有name属性的input  select textarea等数据一并获取并转换二进制
-
-    // 6.4 还要此文章改成'已发布'
-    data.append('state', '已发布')
-    data.append('content', editor.txt.html())
-
-    // 6.5 发送ajax请求
-    $.ajax({
-      type: 'post',
-      url: BigNew.article_edit,
-      data: data,
-      contentType: false, // 不要使用默认的编码格式
-      processData: false, // 不要转换成拼接的字符串形式，因为本身是二进制的数据
-      success: function (res) {
-        // 6.6 如果更新成功，则要跳转到文章列表页
-        // console.log(res);
-        if (res.code == 200) {
-          // window.location.href
-          // 由于我们是从文章列表页跳转过来的，我们还可以跳回去
-          window.history.back() // 回退到上一页
-        }
-      }
-    })
-  })
-
-  // 7. 文章编辑之存为草稿按钮
-  // 7.1 给存为草稿按钮注册事件
-  $('#form .btn-draft').on('click', function (e) {
-    // 7.2 阻止默认行为
-    e.preventDefault()
-    // 7.3 准备要发送的数据 是formData格式的
+    // 8.3 准备要发送的数据 是formData格式的
     var form = $('#form')[0]
     var data = new FormData(form)
 
-    // 7.4 添加文章状态及富文本编辑中的内容
-    data.append('state','草稿')
+    // 8.4 添加文章状态及富文本编辑中的内容
     data.append('content',editor.txt.html())
-
-    // 7.5 发送ajax请求
+    // 8.5 判断到底是哪个按钮进行的单击
+    // console.log(e.target);
+    if($(e.target).hasClass('btn-edit')){ // 修改按钮
+      data.append('state','已发布')
+    }else {
+      // 存为草稿按钮
+      data.append('state','草稿')
+    }
+    // 8.6 发送ajax请求
     $.ajax({
       type: 'post',
       url: BigNew.article_edit,
@@ -122,7 +162,7 @@ $(function () {
       contentType: false, // 不要使用默认的编码格式
       processData: false, // 不要转换成拼接的字符串形式，因为本身是二进制的数据
       success: function (res) {
-        // 7.6 如果更新成功，则要跳转到文章列表页
+        // 8.7 如果更新成功，则要跳转到文章列表页
         // console.log(res);
         if (res.code == 200) {
           // window.location.href
@@ -132,8 +172,6 @@ $(function () {
       }
     })
   })
-
-
 
 
 
