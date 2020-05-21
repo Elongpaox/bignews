@@ -1,7 +1,22 @@
 $(function(){
+  // 1. 页面跳转过来之后，立即发送ajax请求 获取分类数据，来渲染页面
+  $.ajax({
+    type: 'get',
+    url: BigNew.category_list,
+    success: function (res) {
+      console.log(res)
+      console.log(typeof res)
+      // 1.2 获取数据并渲染页面
+      if (res.code == 200) {
+        var htmlStr = template('categoryList', res)
+        $('.category').html(htmlStr)
+      }
+    }
+  })
   // console.log(window.location.search); 
   // location.search获取URL地址栏中的?后面的参数数据
   // "?id=20"
+  // 2. 根据id获取文章数据，渲染到页面上
   var str = location.search.slice(1) // 从索引为1的位置开始截取到最后
   var id = utils.convertToObj(str).id
   console.log(id);
@@ -23,4 +38,7 @@ $(function(){
       }
     }
   })
+
+ 
+
 })
