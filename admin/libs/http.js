@@ -20,6 +20,12 @@
         comment_pass: URL + '/admin/comment/pass',//文章评论通过
         comment_reject: URL + '/admin/comment/reject',//文章评论不通过
         comment_delete: URL + '/admin/comment/delete',//文章评论删除
+        comment_shuju: URL + '/admin/data/info',//获取统计数据
+        comment_zxt: URL + '/admin/data/article',//日新增文章数量统计
+        comment_sl: URL + '/admin/data/category',//各类型文章数量统计
+        comment_fwl: URL + '/admin/data/visit',//日文章访问量
+
+
     }
     //暴露接口
     w.BigNew = BigNew;

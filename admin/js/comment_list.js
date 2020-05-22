@@ -75,9 +75,9 @@ $(function () {
       },
       success: function (res) {
         // 4.3 设置成功后,要更新当前这条数据的状态
-        if(res.code==200){
+        if (res.code == 200) {
           // console.log(this);
-          $(_this).parent().prev().text(res.msg) 
+          $(_this).parent().prev().text(res.msg)
         }
       }
     })
@@ -96,10 +96,10 @@ $(function () {
       },
       success: function (res) {
         // 5.3 设置成功后,要更新当前这条数据的状态
-        if(res.code==200){
+        if (res.code == 200) {
           // console.log(this);
           // 更新当前页码中的页面数据
-          getDataByParams(currentPage,null)
+          getDataByParams(currentPage, null)
         }
       }
     })
@@ -118,9 +118,9 @@ $(function () {
       },
       success: function (res) {
         // 6.3 设置成功后,要更新当前这条数据的状态
-        if(res.code==200){
+        if (res.code == 200) {
           // console.log(this);
-          $(_this).parent().prev().text(res.msg) 
+          $(_this).parent().prev().text(res.msg)
         }
       }
     })
