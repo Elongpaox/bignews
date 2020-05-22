@@ -101,9 +101,10 @@ $(function(){
       return // 阻止代码的向下执行
     }
     
-    // 7.5 如果正常的话，则要跳转到列表页
+    // 7.5 如果正常的话，则要跳转到列表页 
     
-    window.location.href = './list.html?searchTxt='+txtValue
+    // 地址栏后面的参数，是可以自己拼写属性名的
+    window.location.href = './list.html?search='+txtValue
     $('.search_txt').val('')
   })
 })
