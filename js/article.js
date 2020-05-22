@@ -22,6 +22,9 @@ $(function () {
 
         // 要将当前文章的id存到form表单中的隐藏域中
         $('#myForm input[name="articleId"]').val(res.data.id)
+
+        // 文章数据渲染完毕之后，要显示评论列表的数据
+        getCommentData(res.data.id)
       }
     }
   })
@@ -41,6 +44,7 @@ $(function () {
       success:function(res){
         console.log(res);
         if(res.code==201){
+           // 2.4 发送成功之后，要提示用户
           alert('评论发表成功')
           // 清空form表单
           $('#myForm')[0].reset()
@@ -49,6 +53,26 @@ $(function () {
     })
   })
 
-  
-  // 2.4 发送成功之后，要提示用户
+  // 3. 文章的评论列表
+  // 3.1 当文章数据渲染完毕之后，才要显示对应的评论内容
+  function getCommentData(id){
+    $.ajax({
+      type:'get',
+      url:BigNew.comment_list,
+      data:{
+        articleId: id
+      },
+      success:function(res){
+        console.log(res);
+        if(res.code==200){
+          var htmlStr = template('commentListTmp',res)
+          $('.comment_list_con').html(htmlStr)
+
+          // 多少条评论
+          $('.comment_count').html(`${res.data.length}条评论`)
+        }
+      }
+    })
+  }
+ 
 })
