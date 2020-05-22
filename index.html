@@ -29,22 +29,13 @@
             <div class="menu_collapse fl">
                 <a href="javascript:;" class="level_one"><i class="fa fa-list-ul"></i>全部分类</a>
                 <ul class="level_two">
-                    <li class="up"></li>
-                    <li><a href="./list.html">最 新</a></li>
-                    <li><a href="./list.html">科 技</a></li>
-                    <li><a href="./list.html">股 市</a></li>
-                    <li><a href="./list.html">商 品</a></li>
-                    <li><a href="./list.html">外 汇</a></li>
-                    <li><a href="./list.html">公 司</a></li>
+                    
+                    
                 </ul>
             </div>
             <ul class="left_menu fl">
-                <li><a href="#">最 新</a></li>
-                <li><a href="#">科 技</a></li>
-                <li><a href="#">股 市</a></li>
-                <li><a href="#">商 品</a></li>
-                <li><a href="#">外 汇</a></li>
-                <li><a href="#">公 司</a></li>
+                
+               
             </ul>
             <ul class="right_menu fr">
                 <li><a href="#">科技专题</a></li>
@@ -231,6 +222,28 @@
      <script src="./js/http.js"></script>
      <!-- 引入当前页面对应的js文件 -->
     <script src="./js/index.js"></script>
+
+    <!-- 文章分类列表的模板一 -->
+    <script type="text/template" id="categoryList1">
+        <li class="up"></li>
+        {{each data value index}}
+         <li><a href="./list.html?id={{value.id}}">{{value.name}}</a></li>
+         {{/each}}
+    </script>
+
+    <!-- 文章分类列表的模板二 -->
+    <script type="text/template" id="categoryList2">
+        {{each data value }}
+        <li><a href="./list.html?id={{value.id}}">{{value.name}}</a></li>
+        {{/each}}
+    </script>
+
+    <!-- 文章分类列表的模板 -->
+    <script type="text/template" id="categoryList">
+        {{each data value }}
+        <li><a href="./list.html?id={{value.id}}">{{value.name}}</a></li>
+        {{/each}}
+    </script>
 </body>
 
 </html>
