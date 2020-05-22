@@ -67,11 +67,43 @@ $(function(){
     type:'get',
     url:BigNew.latest_comment,
     success:function(res){
-      console.log(res);
+      // console.log(res);
       if(res.code==200){
         var htmlStr = template('commentListTmp',res)
         $('.comment_list').html(htmlStr)
       }
     }
+  })
+
+  // 6. 焦点关注
+  $.ajax({
+    type:'get',
+    url:BigNew.attention_news,
+    success:function(res){
+      console.log(res);
+      if(res.code==200){
+        var htmlStr = template('attentionList',res)
+        $('.guanzhu_list').html(htmlStr)
+      }
+    }
+  })
+
+  // 7. 给搜索按钮注册事件，跳转到文章列表页
+  // 7.1 给搜索按钮注册事件
+  $('.search_btn').on('click',function(){
+    // 7.2 获取搜索框的值
+    var txtValue = $('.search_txt').val()
+    // 7.3 对此值进行判断 
+    // if(txtValue.trim()=='')
+    if(!txtValue.trim()){
+      // 7.4 如果为空，则要提示
+      alert('输入内容不能为空，请重新输入')
+      return // 阻止代码的向下执行
+    }
+    
+    // 7.5 如果正常的话，则要跳转到列表页
+    
+    window.location.href = './list.html?searchTxt='+txtValue
+    $('.search_txt').val('')
   })
 })
